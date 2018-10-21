@@ -3,12 +3,14 @@
 #include <math.h>
 #include <thread>
 #include <chrono>
+#include <algorithm>
 
 using std::cout;
 using std::endl;
 
 Game::Game() {
 
+	getRules();
 	resetVector(grid);
 	
 }
@@ -21,41 +23,54 @@ void Game::setAlive(int y, int x) {
 
 void Game::play() {
 
-	while (true) {
+	int tick = 0;
 
-		int n;
-		std::cin >> n;
-		if (n < 0) {
-			break;
-		}
+	while (this->tickAmount == -1 || tick < this->tickAmount) {
+
 
 		printGrid(grid);
 		printBlanks();
 
-		std::this_thread::sleep_for(std::chrono::seconds(tickRate));
+		std::this_thread::sleep_for(std::chrono::seconds(this->tickRate));
 
 		vector<vector<bool>> temp = grid;
 
 		getNextTick(temp);
 		grid = temp;
 
+		tick++;
+
 
 	}
 
 }
 
-void Game::setTickRate(int tick) {
-	tickRate = tick;
+void Game::getRules() {
+
+	this->tickRate = Rules::getTickRate();
+	this->tickAmount = Rules::getTickAmount();
+
+}
+
+void Game::setTickRate(int tickRate) {
+	this->tickRate = tickRate;
+}
+
+void Game::setTickAmount(int tickAmount) {
+	this->tickAmount = tickAmount;
+}
+
+void Game::setGridSize(int gridSize) {
+	this->gridSize = gridSize;
 }
 
 /*
 
 Game Rules:
 
-- Cells with less than 2 neighbours dies.
-- Cells with two or three neigbours lives.
-- Cells with three neighbours gets alive.
-- Cells with more than 3 neighbours dies.
+- Cells that are alive with the amount of neighbours in designated rules lives
+- Cells that are dead with the amount of neighbours in designated rules resurrects
+- Cells with every other composition either continues being dead or dies
 
 */
 
@@ -66,15 +81,25 @@ void Game::getNextTick(vector<vector<bool>> &tempGrid) {
 
 			int nCount = getNeighbourCount(i, j, grid);
 
-			if (nCount < 2) tempGrid[i][j] = false;
-			else if (nCount == 2 && tempGrid[i][j] ) tempGrid[i][j] = true;
-			else if (nCount == 3) tempGrid[i][j] = true;
-			else if (nCount > 3) tempGrid[i][j] = false;
+			vector<int>* liveIfAlive = Rules::getLiveIfAlive();
+			vector<int>* liveIfDead = Rules::getLiveIfDead();
+
+			if (std::find(liveIfAlive->begin(), liveIfAlive->end(), nCount ) != liveIfAlive->end() && tempGrid[i][j]) {
+				tempGrid[i][j] = true;
+			}
+
+			else if (std::find(liveIfDead->begin(), liveIfDead->end(), nCount) != liveIfDead->end()) {
+				tempGrid[i][j] = true;
+			}
+			else {
+				tempGrid[i][j] = false;
+			}
 
 		}
 	}
 
 }
+
 
 int Game::getNeighbourCount(int xCoor, int yCoor, vector<vector<bool>> &tempGrid) {
 
@@ -117,7 +142,7 @@ void Game::printGrid(vector<vector<bool>> &printToGrid) {
 
 void Game::printBlanks() {
 
-	for (auto i = 0; i < 20; i++) {
+	for (auto i = 0; i < gridSize; i++) {
 		cout << "-";
 	}
 
