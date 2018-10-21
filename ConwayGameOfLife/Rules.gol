@@ -6,10 +6,10 @@
 # gridsize int
 # alive xcoordinate ycoordinate
 
-tickrate 2
+tickrate 1
 tickamount 10
-livealive 2 3
-live dead 3
+livealive 2
+livedead 1
 gridsize 10
 alive 0 0
 alive 0 1

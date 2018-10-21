@@ -5,13 +5,13 @@
 #include <chrono>
 #include <algorithm>
 
+
 using std::cout;
 using std::endl;
 
 Game::Game() {
 
 	getRules();
-	resetVector(grid);
 	
 }
 
@@ -47,14 +47,15 @@ void Game::play() {
 
 void Game::getRules() {
 
-	this->tickRate = Rules::getTickRate();
-	this->tickAmount = Rules::getTickAmount();
-	this->gridSize = Rules::getGridSize();
+	this->tickRate = Rules::tickRate;
+	this->tickAmount = Rules::tickAmount;
+	this->gridSize = Rules::gridSize;
 
-	map<int, int>* aliveBits = Rules::getAliveBits();
+	resetVector(grid);
 
-	for (map<int, int>::iterator it = aliveBits->begin(); it != aliveBits->end(); it++) {
-		setAlive((*aliveBits)[it->first], it->first);
+	vector<std::array<int, 2>>* aliveBits = &Rules::aliveBits;
+	for (int i = 0; i < aliveBits->size(); i++) {
+		setAlive((*aliveBits)[i][0], (*aliveBits)[i][1]);
 	}
 
 }
@@ -88,8 +89,8 @@ void Game::getNextTick(vector<vector<bool>> &tempGrid) {
 
 			int nCount = getNeighbourCount(i, j, grid);
 
-			vector<int>* liveIfAlive = Rules::getLiveIfAlive();
-			vector<int>* liveIfDead = Rules::getLiveIfDead();
+			vector<int>* liveIfAlive = &Rules::liveIfAlive;
+			vector<int>* liveIfDead = &Rules::liveIfDead;
 
 			if (std::find(liveIfAlive->begin(), liveIfAlive->end(), nCount ) != liveIfAlive->end() && tempGrid[i][j]) {
 				tempGrid[i][j] = true;

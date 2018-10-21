@@ -1,16 +1,15 @@
 #include <iostream>
 #include "Game.h"
+#include "Parser.h"
 
 int main() {
 	
-	Game game;
-	game.setAlive(0, 0);
-	game.setAlive(0, 1);
-	game.setAlive(1, 0);
-	game.setAlive(1, 1);
-	game.setAlive(0, 2);
+	Parser parser("Rules.gol");
+	parser.parse();
 
+	Game game;
 	game.play();
+
 
 	return 0;
 }

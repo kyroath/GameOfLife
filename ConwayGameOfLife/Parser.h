@@ -9,6 +9,7 @@ class Parser {
 public:
 	Parser();
 	Parser(string);
+	void parse();
 
 private:
 	string fileName = "";
