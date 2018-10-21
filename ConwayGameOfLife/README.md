@@ -1,0 +1,1 @@
+A Conway's Game of Life with a simple syntax for changing the rules
