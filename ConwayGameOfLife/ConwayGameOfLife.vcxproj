@@ -116,11 +116,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Rules.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Parser.h" />
     <ClInclude Include="Rules.h" />
   </ItemGroup>
   <ItemGroup>

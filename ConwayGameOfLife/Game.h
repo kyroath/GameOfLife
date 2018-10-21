@@ -12,6 +12,8 @@ public:
 	void play();
 
 	void setTickRate(int);
+	void setTickAmount(int);
+	void setGridSize(int);
 
 private:
 	int gridSize = 5;
@@ -31,5 +33,8 @@ private:
 
 	// tick rate of the simulation as seconds
 	int tickRate = 1;
+	int tickAmount = -1;
+
+	void getRules();
 };
 
