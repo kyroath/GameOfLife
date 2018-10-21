@@ -49,6 +49,13 @@ void Game::getRules() {
 
 	this->tickRate = Rules::getTickRate();
 	this->tickAmount = Rules::getTickAmount();
+	this->gridSize = Rules::getGridSize();
+
+	map<int, int>* aliveBits = Rules::getAliveBits();
+
+	for (map<int, int>::iterator it = aliveBits->begin(); it != aliveBits->end(); it++) {
+		setAlive((*aliveBits)[it->first], it->first);
+	}
 
 }
 

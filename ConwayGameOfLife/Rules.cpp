@@ -28,6 +28,10 @@ void Rules::setGridSize(int size) {
 	gridSize = size;
 }
 
+void Rules::setAlive(int xCoor, int yCoor) {
+	aliveBits[xCoor] = yCoor;
+}
+
 vector<int>* Rules::getLiveIfAlive() {
 
 	vector<int>* pointer = &liveIfAlive;
@@ -40,6 +44,12 @@ vector<int>* Rules::getLiveIfDead() {
 	vector<int>* pointer = &liveIfDead;
 	return pointer;
 
+}
+
+map<int, int>* Rules::getAliveBits() {
+
+	map<int, int>* pointer = &aliveBits;
+	return pointer;
 }
 
 int Rules::getTickRate() {

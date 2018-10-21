@@ -49,6 +49,12 @@ void Parser::parseFile() {
 			else if (tokens[0] == "gridsize") {
 				Rules::setGridSize(std::stoi(tokens[1]));
 			}
+			else if (tokens[0] == "alive") {
+				Rules::setAlive(std::stoi(tokens[1]), std::stoi(tokens[2]));
+			}
+			else if (tokens[0] == "#") {
+				continue;
+			}
 
 		}
 		catch (const std::out_of_range) {

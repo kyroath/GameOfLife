@@ -1,5 +1,17 @@
 # Syntax
 # livealive number of neighbours...
 # livedead number of neighbours...
-# tickRate tickRate as seconds
-# play number of ticks (-1 for infinite)
+# tickrate tickRate as seconds
+# tickamount number of ticks (-1 for infinite)
+# gridsize int
+# alive xcoordinate ycoordinate
+
+tickrate 2
+tickamount 10
+livealive 2 3
+live dead 3
+gridsize 10
+alive 0 0
+alive 0 1
+alive 1 0
+alive 1 1
